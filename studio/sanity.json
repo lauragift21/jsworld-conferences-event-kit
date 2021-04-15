@@ -1,12 +1,12 @@
 {
   "root": true,
   "project": {
-    "name": "nextjs-conference",
+    "name": "JSWorld Event Kit",
     "basePath": "/studio"
   },
   "api": {
-    "projectId": "jmhf2rn8",
-    "dataset": "nextjs-conference"
+    "projectId": "3fi0ise3",
+    "dataset": "production"
   },
   "plugins": [
     "@sanity/base",

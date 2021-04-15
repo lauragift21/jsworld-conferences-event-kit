@@ -35,3 +35,4 @@ yarn-error.log*
 
 public/studio
 studio/node_modules/
+studio/migrations/tmp
