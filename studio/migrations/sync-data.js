@@ -201,33 +201,37 @@ const updateTalks = async ({ localTalks, existingTalks }) => {
   // existingTalks contains all the talks from the next dataset
   // what we need to do: for Each talk, check if we already have it or not, then if we do have it update it, if we don't create it
   // no need to upload stuff or create other things because by this time we already have all companies and all speakers that we need
-    await Promise.all(existingTalks.map((talk) => {
+  await Promise.all(
+    existingTalks.map(talk => {
       const id = talk._id;
       const existingTalk = localTalks.find(({ _id }) => _id === id);
-      
-        if (existingTalk) {
-            console.log(talk.speakers);
-          return localClient
-              .patch(id)
-              .set({
-                  title: talk.title,
-                  description: BlocksToPlainText(talk.description),
-                  speakers: talk.speakers.map((speaker, idx) => ({
-                    _type: 'reference',
-                    _ref: speaker.speakerId,
-                    _key: `${idx}`
-                  }))
-              }).unset(['speaker']).commit()
-      } else {
-          return localClient.createIfNotExists({
-            _type: 'talk',
-            _id: id,
+
+      if (existingTalk) {
+        console.log(talk.speakers);
+        return localClient
+          .patch(id)
+          .set({
             title: talk.title,
             description: BlocksToPlainText(talk.description),
-            speakers: talk.speakers
-          });
+            speakers: talk.speakers.map((speaker, idx) => ({
+              _type: 'reference',
+              _ref: speaker.speakerId,
+              _key: `${idx}`
+            }))
+          })
+          .unset(['speaker'])
+          .commit();
+      } else {
+        return localClient.createIfNotExists({
+          _type: 'talk',
+          _id: id,
+          title: talk.title,
+          description: BlocksToPlainText(talk.description),
+          speakers: talk.speakers
+        });
       }
-    }))
+    })
+  );
 };
 
 const getLocalCompanies = async () =>
@@ -242,8 +246,7 @@ const getLocalSpeakers = async () =>
   'logo': logo.asset->
 }`);
 
-const getLocalTalks = async () =>
-  await localClient.fetch(`*[_type=="talk"]`);
+const getLocalTalks = async () => await localClient.fetch(`*[_type=="talk"]`);
 
 const run = async () => {
   const localCompanies = await getLocalCompanies();
@@ -280,8 +283,8 @@ const run = async () => {
   await updateCompanies(context);
   await updateSpeakers(context);
   await updateTalks(context);
-  
- console.log(await getLocalTalks());
+
+  console.log(await getLocalCompanies());
 };
 
 run();

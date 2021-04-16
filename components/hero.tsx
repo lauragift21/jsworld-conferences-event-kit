@@ -22,6 +22,11 @@ import { BRAND_NAME, DATE, SITE_DESCRIPTION } from '@lib/constants';
 export default function Hero() {
   return (
     <div className={styles.wrapper}>
+      <img
+        className={cn(styleUtils.appear, styleUtils['appear-third'], styleUtils['hide-on-mobile'], styles.logo)}
+        src="https://a.storyblok.com/f/84560/762x231/119fac8f12/tavola-disegno-35.png"
+        alt="Africa"
+      />
       <h2
         className={cn(
           styleUtils.appear,

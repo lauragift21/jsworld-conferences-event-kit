@@ -59,6 +59,11 @@
   margin: 0;
 }
 
+.logo {
+  width: 400px;
+  margin: 0 35%;
+}
+
 @media (min-width: 768px) {
   .hero {
     font-size: 100px;
