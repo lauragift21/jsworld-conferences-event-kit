@@ -60,10 +60,14 @@ export type Sponsor = {
   callToActionLink: string;
   links: SponsorLink[];
   discord: string;
-  tier: string;
   cardImage: Image;
   logo: Image;
   youtubeSlug: string;
+};
+
+export type SponsorArray = {
+  tier: string;
+  items: Sponsor[];
 };
 
 export type SponsorLink = {

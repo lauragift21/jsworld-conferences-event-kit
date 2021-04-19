@@ -34,14 +34,40 @@
 }
 
 .grid {
+  margin: 0 auto 50px;
   width: 100%;
-  margin: 50px auto;
-  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1fr);
+  grid-gap: 24px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sponsorName {
+  color: #f1f1f1;
+  font-size: 24px;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  margin: var(--space-4x) 0 var(--space);
+  padding-bottom: var(--space);
+  display: inline-flex;
 }
 
 @media (min-width: 768px) {
   .card {
     margin-bottom: 0;
+  }
+  .sponsorRow {
+    padding: 0 var(--space-8x);
+  }
+  .sponsorName {
+    font-size: 28px;
   }
   .grid {
     display: grid;
@@ -50,8 +76,14 @@
   }
 }
 
-.silver {
-  border-radius: 6px;
+@media (min-width: 500px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}
+
+.grid::-webkit-scrollbar {
+  display: none;
 }
 
 .cardBody {
@@ -61,6 +93,14 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+}
+
+.rowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: intial;
+  margin-bottom: var(--space-4x);
+  flex-direction: column;
 }
 
 .imageWrapper {
