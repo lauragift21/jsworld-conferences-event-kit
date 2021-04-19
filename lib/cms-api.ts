@@ -66,7 +66,7 @@ export const PortableText = createPortableTextComponent({
 })
 
 export async function getAllSpeakers(preview?: Boolean) {
-  const data = await getClient(preview).fetch(getAllSpeakersQuery);
+  const data = await getClient(preview).fetch(getAllSpeakersQuery)
   return data
 }
 

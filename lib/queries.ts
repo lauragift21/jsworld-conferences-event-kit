@@ -63,8 +63,32 @@ export const getAllJobsQuery = groq`*[_type=="job" &&
   discord,
   rank,
   'image': image.asset->,
-} | order (date desc)|[0...100]`;
+} | order (date desc)|[0...100]`
 
+export const getAllSponsorsQuery = groq`*[_type=="conference" && slug == "jsworld-conference-africa-2021"][0]{
+  sponsors[]{
+    'tier': title,
+    items[]{
+      ...company->{
+      	name,
+        description,
+        'slug': slug.current,
+        website,
+        callToAction,
+     		callToActionLink,
+        discord,
+        youtubeSlug,
+      	'cardImage': logo,
+        logo,
+        links[]{
+      	'text': label,
+      	'url': destination
+    }
+    	}
+    }
+  }
+}.sponsors
+`;
 export const getAllStagesQuery = groq`*[_type == "stage"]{
         name,
         "slug": slug.current,
@@ -81,21 +105,3 @@ export const getAllStagesQuery = groq`*[_type == "stage"]{
           }
         }
       }`
-
-export const getAllSponsorsQuery = groq`*[_type == "company"]{
-        name,
-        description,
-        "slug": slug.current,
-        website,
-        callToAction,
-        callToActionLink,
-        discord,
-        youtubeSlug,
-        tier,
-        links[]{
-          url,
-          text
-        },
-        cardImage ,
-        logo
-      }|order(rank desc)`

@@ -37,7 +37,7 @@ function CompanyJobs({ jobs }: Props) {
             <div>
               <h3 className={styles.title}>{job.title}</h3>
               <p className={styles.company}>{job.companyName}</p>
-              <PortableText blocks={job.description} />
+              <PortableText blocks={job.description} className={styles.description} />
             </div>
             <p className={styles.link}>
               Learn More
