@@ -32,10 +32,10 @@ export const NAVIGATION = [
     name: 'Stage B',
     route: '/stage/b'
   },
-  {
-    name: 'Stage C',
-    route: '/stage/c'
-  },
+  // {
+  //   name: 'Stage C',
+  //   route: '/stage/c'
+  // },
   {
     name: 'Schedule',
     route: '/schedule'

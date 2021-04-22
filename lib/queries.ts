@@ -89,8 +89,10 @@ export const getAllSponsorsQuery = groq`*[_type=="conference" && slug == "jsworl
   }
 }.sponsors
 `;
-export const getAllStagesQuery = groq`*[_type == "stage"]{
-        name,
+
+export const getAllStagesQuery = groq`*[_type=="conference" && slug == "jsworld-conference-africa-2021"][0]{
+  stage[]{
+    name,
         "slug": slug.current,
         stream,
         discord,
@@ -98,10 +100,11 @@ export const getAllStagesQuery = groq`*[_type == "stage"]{
           title,
           start,
           end,
-          speakers[]->{
+        speaker->{
             name,
             "slug": slug.current,
             image
           }
         }
-      }`
+  }
+}.stage`
