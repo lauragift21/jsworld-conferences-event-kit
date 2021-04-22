@@ -94,7 +94,7 @@ export default function SponsorSection({ sponsor }: Props) {
           </div>
           <div className={styles.resources}>
             <h2 className={styles.heading}>Resources</h2>
-            {sponsor.links.map(link => (
+            {sponsor.links?.map(link => (
               <a
                 key={link.url}
                 href={link.url}

@@ -21,16 +21,19 @@ import SponsorSection from '@components/sponsor-section';
 import Layout from '@components/layout';
 
 import { getAllSponsors } from '@lib/cms-api';
-import { Sponsor } from '@lib/types';
+import { Sponsor, SponsorArray } from '@lib/types';
 import { META_DESCRIPTION } from '@lib/constants';
 
 type Props = {
-  sponsor: Sponsor;
+  sponsors: SponsorArray;
+  sponsor: Sponsor
 };
+
+// TODO: Refactor and Improve Implementation
 
 export default function SponsorPage({ sponsor }: Props) {
   const meta = {
-    title: 'Demo - Virtual Event Starter Kit',
+    title: 'Expo - JSWorld Conference AFRICA',
     description: META_DESCRIPTION
   };
 
@@ -45,12 +48,25 @@ export default function SponsorPage({ sponsor }: Props) {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const slug = params?.slug;
-  const sponsors = await getAllSponsors();
-  const sponsor = sponsors.find((s: Sponsor) => s.slug === slug) || null;
+  const expandedSponsors = await getAllSponsors()
+  const sponsors = expandedSponsors.map((s: SponsorArray) => {
+    return s.items.flatMap(item => {
+      return item || null
+    })
+  })
 
+  const sponsor = sponsors.flat().find((s: Sponsor) => s.slug === slug) || null;
+
+  if (!sponsor) {
+    return {
+      notFound: true
+    };
+  }
+  
   return {
     props: {
-      sponsor
+      sponsor,
+      sponsors
     },
     revalidate: 60
   };
@@ -58,8 +74,13 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const sponsors = await getAllSponsors();
-  const slugs = sponsors.map((s: Sponsor) => ({ params: { slug: s.slug } }));
-
+  const sponsor = sponsors.map((s: SponsorArray) => {
+    return s.items.flatMap(item => {
+      return item.slug || null
+    })
+  })
+  let sponsored = sponsor.flat();
+  const slugs = sponsored.map((s: Sponsor) => ({ params: { slug: JSON.stringify(s) } }));
   return {
     paths: slugs,
     fallback: 'blocking'
