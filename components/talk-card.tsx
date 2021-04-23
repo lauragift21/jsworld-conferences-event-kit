@@ -44,12 +44,12 @@ export default function TalkCard({ talk: { title, speaker, start, end }, showTim
     setStartAndEndTime(`${formatDate(start)} – ${formatDate(end)}`);
   }, []);
 
-  const talkLink = speaker ? `/speakers/${speaker.slug}` : '';
+  // const talkLink = speaker ? `/speakers/${speaker.slug}` : '';
 
   return (
     <div key={title} className={styles.talk}>
       {showTime && <p className={styles.time}>{startAndEndTime || <>&nbsp;</>}</p>}
-      <Link href={talkLink}>
+      <Link href='/speakers'>
         <a
           className={cn(styles.card, {
             [styles['is-live']]: isTalkLive
