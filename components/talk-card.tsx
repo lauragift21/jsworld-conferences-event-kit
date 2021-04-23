@@ -34,7 +34,7 @@ const formatDate = (date: string) => {
   return format(parseISO(date), "h:mmaaaaa'm'");
 };
 
-export default function TalkCard({ talk: { title, speaker, start, end }, showTime }: Props) {
+export default function TalkCard({ talk: { title, speaker = [], start, end }, showTime }: Props) {
   const [isTalkLive, setIsTalkLive] = useState(false);
   const [startAndEndTime, setStartAndEndTime] = useState('');
 
@@ -44,6 +44,7 @@ export default function TalkCard({ talk: { title, speaker, start, end }, showTim
     setStartAndEndTime(`${formatDate(start)} – ${formatDate(end)}`);
   }, []);
 
+  // TODO: Fix Slug Prop failing on Build
   // const talkLink = speaker ? `/speakers/${speaker.slug}` : '';
 
   return (
@@ -61,13 +62,13 @@ export default function TalkCard({ talk: { title, speaker, start, end }, showTim
             </h4>
             <div className={styles.speaker}>
               <div className={styles['avatar-group']}>
-                <div key={speaker.slug} className={styles['avatar-wrapper']}>
+                <div key={speaker.name} className={styles['avatar-wrapper']}>
                   <Image
                     loading="lazy"
-                    alt={speaker.slug}
+                    alt={speaker.name}
                     className={styles.avatar}
                     src={urlFor(speaker.image).width(24).height(24).url() || ''}
-                    title={speaker.slug}
+                    title={speaker.name}
                     width={24}
                     height={24}
                   />
