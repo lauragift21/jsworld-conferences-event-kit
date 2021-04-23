@@ -44,13 +44,12 @@ export default function TalkCard({ talk: { title, speaker = [], start, end }, sh
     setStartAndEndTime(`${formatDate(start)} – ${formatDate(end)}`);
   }, []);
 
-  // TODO: Fix Slug Prop failing on Build
-  // const talkLink = speaker ? `/speakers/${speaker.slug}` : '';
+  const talkLink = speaker ? `/speakers/${speaker.slug}` : '';
 
   return (
     <div key={title} className={styles.talk}>
       {showTime && <p className={styles.time}>{startAndEndTime || <>&nbsp;</>}</p>}
-      <Link href='/speakers'>
+      <Link href={talkLink}>
         <a
           className={cn(styles.card, {
             [styles['is-live']]: isTalkLive
@@ -62,13 +61,13 @@ export default function TalkCard({ talk: { title, speaker = [], start, end }, sh
             </h4>
             <div className={styles.speaker}>
               <div className={styles['avatar-group']}>
-                <div key={speaker.name} className={styles['avatar-wrapper']}>
+                <div key={speaker.slug} className={styles['avatar-wrapper']}>
                   <Image
                     loading="lazy"
-                    alt={speaker.name}
+                    alt={speaker.slug}
                     className={styles.avatar}
                     src={urlFor(speaker.image).width(24).height(24).url() || ''}
-                    title={speaker.name}
+                    title={speaker.slug}
                     width={24}
                     height={24}
                   />
