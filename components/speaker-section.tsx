@@ -70,8 +70,7 @@ export default function SpeakerSection({ speaker }: Props) {
           <div>
             <h1 className={styles.name}>{speaker.name}</h1>
             <p className={styles.title}>
-              {`${speaker.title} @ `}
-              <span className={styles.company}>{speaker.company}</span>
+              {speaker.title}
             </p>
             <h2 className={styles['bio-header']}>Bio</h2>
             <div className={styles.bio}>
