@@ -22,7 +22,7 @@ import Layout from '@components/layout';
 
 import { getAllStages } from '@lib/cms-api';
 import { Stage } from '@lib/types';
-import { META_DESCRIPTION } from '@lib/constants';
+import { BRAND_NAME, META_DESCRIPTION } from '@lib/constants';
 
 type Props = {
   stage: Stage;
@@ -31,7 +31,7 @@ type Props = {
 
 export default function StagePage({ stage, allStages }: Props) {
   const meta = {
-    title: 'Demo - Virtual Event Starter Kit',
+    title: `Stage - ${BRAND_NAME}`,
     description: META_DESCRIPTION
   };
 
@@ -60,6 +60,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const stages = await getAllStages();
+  // console.log(stages)
   const slugs = stages.map((s: Stage) => ({ params: { slug: s.slug } }));
 
   return {
