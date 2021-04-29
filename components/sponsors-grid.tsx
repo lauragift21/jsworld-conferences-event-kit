@@ -35,7 +35,7 @@ function SponsorCard({ sponsors }: Props) {
             <div className={styles.imageWrapper}>
               <Image
                 alt={sponsor.name}
-                src={urlFor(sponsor.cardImage).width(900).height(500).url() || ''}
+                src={urlFor(sponsor.cardImage).url() || ''}
                 className={cn(styles.image)}
                 loading="lazy"
                 title={sponsor.name}
