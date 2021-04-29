@@ -44,8 +44,8 @@ export type Talk = {
   title: string;
   description: string;
   duration: number;
-  start?: Date;
-  end?: Date;
+  start: Date;
+  end: Date;
   speaker: Speaker;
 };
 
