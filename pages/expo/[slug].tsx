@@ -22,18 +22,16 @@ import Layout from '@components/layout';
 
 import { getAllSponsors } from '@lib/cms-api';
 import { Sponsor, SponsorArray } from '@lib/types';
-import { META_DESCRIPTION } from '@lib/constants';
+import { META_DESCRIPTION, BRAND_NAME } from '@lib/constants';
 
 type Props = {
   sponsors: SponsorArray;
   sponsor: Sponsor
 };
 
-// TODO: Refactor and Improve Implementation
-
 export default function SponsorPage({ sponsor }: Props) {
   const meta = {
-    title: 'Expo - JSWorld Conference AFRICA',
+    title: `Expo - ${BRAND_NAME}`,
     description: META_DESCRIPTION
   };
 

@@ -30,28 +30,21 @@ type Props = {
 export default function ScheduleSidebar({ allStages }: Props) {
   const router = useRouter();
   const [currentStageSlug, setCurrentStageSlug] = useState(router.query.slug);
-  const currentStage = allStages.find((s: Stage) => s.slug === currentStageSlug);
-
+  const currentStage = allStages.find((s: Stage) => s.slug === currentStageSlug) as Stage;
+  
   useEffect(() => {
     setCurrentStageSlug(router.query.slug);
   }, [router.query.slug]);
-
-  // Group talks by the time block
-  // let startDate = currentStage?.date || '';
-  // const timeBlocks = currentStage?.schedule.reduce((allBlocks: any, talk) => {
-  //   console.log(startDate);
-
-  //   talk.start = startDate
-  //   console.log(startDate);
-
-  //   talk.end = addMinutes(talk.start, talk.duration || 0)
-  //   startDate = talk.end;
-  //   console.log(startDate);
-  //   // let talkStart = (startDate).toISOString();
-    
-  //   // allBlocks[talkStart] = [...(allBlocks[talkStart] || []), talk];
-  //   return allBlocks;
-  // }, {});
+  
+  let startDate = new Date(currentStage.date);
+  const timeBlocks = currentStage.schedule.reduce((allBlocks: any, talk) => {
+    talk.start = startDate
+    talk.end = addMinutes(talk.start, talk.duration || 0)
+    startDate = talk.end;
+    let talkStart = (startDate).toISOString();
+    allBlocks[talkStart] = [...(allBlocks[talkStart] || []), talk];
+    return allBlocks;
+  }, {});
 
   return (
     <div className={styles.schedule}>
@@ -73,13 +66,13 @@ export default function ScheduleSidebar({ allStages }: Props) {
         ))}
       </Select>
       <div className={styles.talks}>
-        {/* {Object.keys(timeBlocks).map((startTime: string) => (
-          <div key={startTime}>
+        {Object.keys(timeBlocks).map((startTime: string) => (
+        <div key={startTime}>
             {timeBlocks[startTime].map((talk: Talk, index: number) => (
               <TalkCard key={talk.title} talk={talk} showTime={index === 0} />
             ))}
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );
