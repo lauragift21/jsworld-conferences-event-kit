@@ -91,20 +91,22 @@ export const getAllSponsorsQuery = groq`*[_type=="conference" && slug == "jsworl
 `;
 
 export const getAllStagesQuery = groq`*[_type=="conference" && slug == "jsworld-conference-africa-2021"][0]{
-  stage[]{
-    name,
-        "slug": slug.current,
-        stream,
-        discord,
-        schedule[]->{
-          title,
-          start,
-          end,
-        speaker->{
-            name,
-            "slug": slug.current,
-            image
-          }
-        }
+  stage[] {
+  	name,
+    'slug': slug.current,
+    stream,
+    discord,
+    date,
+    schedule[] {
+      duration, 
+      ...coalesce(talk->){
+      title,
+      speaker-> {
+      name,
+      'slug': slug.current,
+      image
+    }
+   }
   }
-}.stage`
+ }
+}.stage`;

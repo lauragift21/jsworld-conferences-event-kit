@@ -18,7 +18,7 @@ import cn from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { parseISO, format, isBefore, isAfter } from 'date-fns';
+import { format, isBefore, isAfter } from 'date-fns';
 import { Talk } from '@lib/types';
 import styles from './talk-card.module.css';
 import { urlFor } from '@lib/cms-api';
@@ -29,9 +29,9 @@ type Props = {
   showTime: boolean;
 };
 
-const formatDate = (date: string) => {
+const formatDate = (date: Date) => {
   // https://github.com/date-fns/date-fns/issues/946
-  return format(parseISO(date), "h:mmaaaaa'm'");
+  return format(date, "h:mmaaaaa'm'");
 };
 
 export default function TalkCard({ talk: { title, speaker, start, end }, showTime }: Props) {
@@ -40,11 +40,10 @@ export default function TalkCard({ talk: { title, speaker, start, end }, showTim
 
   useEffect(() => {
     const now = Date.now();
-    setIsTalkLive(isAfter(now, parseISO(start)) && isBefore(now, parseISO(end)));
+    setIsTalkLive(isAfter(now, start) && isBefore(now, end));
     setStartAndEndTime(`${formatDate(start)} – ${formatDate(end)}`);
   }, []);
-
-
+  
   const talkLink = speaker ? `/speakers/${speaker.slug}` : '';
 
   return (
@@ -76,7 +75,6 @@ export default function TalkCard({ talk: { title, speaker, start, end }, showTim
               </div>
               <h5 className={styles.name}>
                 {speaker.name}
-                {/* {speaker.length === 0 ? speaker.name : `${speaker.length} speakers`} */}
               </h5>
             </div>
           </div>

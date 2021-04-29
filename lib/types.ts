@@ -33,6 +33,7 @@ export type Speaker = {
 
 export type Stage = {
   name: string;
+  date: Date;
   slug: string;
   stream: string;
   discord: string;
@@ -42,8 +43,9 @@ export type Stage = {
 export type Talk = {
   title: string;
   description: string;
-  start: string;
-  end: string;
+  duration: number;
+  start: Date;
+  end: Date;
   speaker: Speaker;
 };
 
