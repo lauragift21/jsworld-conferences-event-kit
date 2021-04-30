@@ -234,6 +234,11 @@ const updateTalks = async ({ localTalks, existingTalks }) => {
   );
 };
 
+// fetch jobs from secondarySanity
+const updateJobs = async () => {
+  
+}
+
 const getLocalCompanies = async () =>
   await localClient.fetch(`*[_type=="company"]{
   ...,

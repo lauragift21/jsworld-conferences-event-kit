@@ -16,7 +16,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Stage } from '@lib/types';
+import { Stage, Talk } from '@lib/types';
+import { addMinutes } from 'date-fns';
 import styles from './schedule-sidebar.module.css';
 import Select from './select';
 import TalkCard from './talk-card';
@@ -29,16 +30,26 @@ type Props = {
 export default function ScheduleSidebar({ allStages }: Props) {
   const router = useRouter();
   const [currentStageSlug, setCurrentStageSlug] = useState(router.query.slug);
-  const currentStage = allStages.find((s: Stage) => s.slug === currentStageSlug);
-
+  const currentStage = allStages.find((s: Stage) => s.slug === currentStageSlug) as Stage;
+  
   useEffect(() => {
     setCurrentStageSlug(router.query.slug);
   }, [router.query.slug]);
+  
+  let startDate = new Date(currentStage.date);
+  const timeBlocks = currentStage.schedule.reduce((allBlocks: any, talk) => {
+    talk.start = startDate
+    talk.end = addMinutes(talk.start, talk.duration || 0)
+    startDate = talk.end;
+    let talkStart = (startDate).toISOString();
+    allBlocks[talkStart] = [...(allBlocks[talkStart] || []), talk];
+    return allBlocks;
+  }, {});
 
   return (
     <div className={styles.schedule}>
       <h3 className={styles.header}>Schedule</h3>
-      <p>{SHORT_DATE}</p>
+      <p className={styles.shortdate}>{SHORT_DATE}</p>
       <Select
         aria-label="Select a stage"
         value={currentStageSlug}
@@ -55,8 +66,12 @@ export default function ScheduleSidebar({ allStages }: Props) {
         ))}
       </Select>
       <div className={styles.talks}>
-        {currentStage?.schedule.map(talk => (
-          <TalkCard key={talk.title} talk={talk} showTime />
+        {Object.keys(timeBlocks).map((startTime: string) => (
+        <div key={startTime}>
+            {timeBlocks[startTime].map((talk: Talk, index: number) => (
+              <TalkCard key={talk.title} talk={talk} showTime={index === 0} />
+            ))}
+          </div>
         ))}
       </div>
     </div>

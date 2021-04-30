@@ -66,7 +66,7 @@
 }
 
 .created-by-logo {
-  height: calc(16px * var(--size));
+  height: -15px;
   display: inline-flex;
 }
 

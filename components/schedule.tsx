@@ -15,16 +15,23 @@
  */
 
 import cn from 'classnames';
+import { addMinutes } from 'date-fns';
 import { Stage, Talk } from '@lib/types';
 import styles from './schedule.module.css';
 import TalkCard from './talk-card';
 
 function StageRow({ stage }: { stage: Stage }) {
   // Group talks by the time block
+  let startDate = new Date(stage.date);
   const timeBlocks = stage.schedule.reduce((allBlocks: any, talk) => {
-    allBlocks[talk.start] = [...(allBlocks[talk.start] || []), talk];
+    talk.start = startDate
+    talk.end = addMinutes(talk.start, talk.duration || 0)
+    startDate = talk.end;
+    let talkStart = (startDate).toISOString();
+    allBlocks[talkStart] = [...(allBlocks[talkStart] || []), talk];
     return allBlocks;
   }, {});
+
 
   return (
     <div key={stage.name} className={styles.row}>

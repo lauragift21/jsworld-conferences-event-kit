@@ -15,6 +15,7 @@
  */
 
 import { Job } from '@lib/types';
+import { PortableText } from '@lib/cms-api';
 import styles from './jobs-grid.module.css';
 
 type Props = {
@@ -36,7 +37,7 @@ function CompanyJobs({ jobs }: Props) {
             <div>
               <h3 className={styles.title}>{job.title}</h3>
               <p className={styles.company}>{job.companyName}</p>
-              <p className={styles.description}>{job.description}</p>
+              <PortableText blocks={job.description} className={styles.description} />
             </div>
             <p className={styles.link}>
               Learn More

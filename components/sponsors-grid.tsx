@@ -17,67 +17,66 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import cn from 'classnames';
-import { Sponsor } from '@lib/types';
+import { SponsorArray } from '@lib/types';
 import styles from './sponsors-grid.module.css';
 import { urlFor } from '@lib/cms-api';
 
-function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
+function SponsorCard({ sponsors }: Props) {
+  const iteratesponsors = sponsors[0].items;
   return (
-    <Link key={sponsor.name} href={`/expo/${sponsor.slug}`}>
-      <a
-        role="button"
-        tabIndex={0}
-        className={cn(styles.card, {
-          [styles.diamond]: sponsor.tier === 'diamond',
-          [styles.gold]: sponsor.tier === 'gold'
-        })}
-      >
-        <div className={styles.imageWrapper}>
-          <Image
-            alt={sponsor.name}
-            src={urlFor(sponsor.cardImage).width(900).height(500).url() || ''}
-            className={cn(styles.image, {
-              [styles.silver]: sponsor.tier === 'silver'
-            })}
-            loading="lazy"
-            title={sponsor.name}
-            width={900}
-            height={500}
-          />
-        </div>
-        {sponsor.tier !== 'silver' && (
-          <div className={styles.cardBody}>
-            <div>
-              <h2 className={styles.name}>{sponsor.name}</h2>
-              <p className={styles.description}>{sponsor.description}</p>
+    <div className={styles.grid}>
+      {iteratesponsors.map(sponsor => (
+        <Link key={sponsor.name} href={`/expo/${sponsor.slug}`}>
+          <a
+            role="button"
+            tabIndex={0}
+            className={cn(styles.card)}
+          >
+            <div className={styles.imageWrapper}>
+              <Image
+                alt={sponsor.name}
+                src={urlFor(sponsor.cardImage).url() || ''}
+                className={cn(styles.image)}
+                loading="lazy"
+                title={sponsor.name}
+                width={900}
+                height={500}
+              />
             </div>
-          </div>
-        )}
-      </a>
-    </Link>
+              <div className={styles.cardBody}>
+                <div>
+                  <h2 className={styles.name}>{sponsor.name}</h2>
+                  <p className={styles.description}>{sponsor.description}</p>
+                </div>
+              </div>
+          </a>
+        </Link>
+      ))}
+    </div>
   );
 }
 
 type Props = {
-  sponsors: Sponsor[];
+  sponsors: SponsorArray[];
 };
 
 export default function SponsorsGrid({ sponsors }: Props) {
-  const silverSponsors = sponsors.filter(s => s.tier === 'silver');
-  const otherSponsors = sponsors.filter(s => s.tier !== 'silver');
+
+  const sponsorTier = sponsors.reduce((allTiers: any, sponsor) => {
+    allTiers[sponsor.tier] = [...(allTiers[sponsor.tier] || []), sponsor];
+    return allTiers;
+  }, {});
 
   return (
     <>
-      <div className={styles.grid}>
-        {otherSponsors.map(sponsor => (
-          <SponsorCard key={sponsor.name} sponsor={sponsor} />
-        ))}
-      </div>
-      <div className={styles.grid}>
-        {silverSponsors.map(sponsor => (
-          <SponsorCard key={sponsor.name} sponsor={sponsor} />
-        ))}
-      </div>
+      {Object.keys(sponsorTier).map((tier: string) => (
+        <div key={tier} className={styles.sponsorRow}>
+          <div className={styles.rowHeader}>
+            <h2 className={styles.sponsorName}>{tier}</h2>
+          </div>
+          <SponsorCard sponsors={sponsorTier[tier]} />
+        </div>
+      ))}
     </>
   );
 }

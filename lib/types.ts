@@ -33,6 +33,7 @@ export type Speaker = {
 
 export type Stage = {
   name: string;
+  date: Date;
   slug: string;
   stream: string;
   discord: string;
@@ -42,9 +43,10 @@ export type Stage = {
 export type Talk = {
   title: string;
   description: string;
-  start: string;
-  end: string;
-  speakers: Speaker[];
+  duration: number;
+  start: Date;
+  end: Date;
+  speaker: Speaker;
 };
 
 export type Link = {
@@ -60,10 +62,14 @@ export type Sponsor = {
   callToActionLink: string;
   links: SponsorLink[];
   discord: string;
-  tier: string;
   cardImage: Image;
   logo: Image;
   youtubeSlug: string;
+};
+
+export type SponsorArray = {
+  tier: string;
+  items: Sponsor[];
 };
 
 export type SponsorLink = {

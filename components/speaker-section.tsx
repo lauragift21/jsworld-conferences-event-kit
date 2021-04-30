@@ -20,7 +20,7 @@ import cn from 'classnames';
 import GithubIcon from '@components/icons/icon-github';
 import { Speaker } from '@lib/types';
 import styles from './speaker-section.module.css';
-import { urlFor } from '@lib/cms-api';
+import { urlFor, PortableText } from '@lib/cms-api';
 
 const TwitterIcon = () => (
   <svg width={24} viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -70,11 +70,12 @@ export default function SpeakerSection({ speaker }: Props) {
           <div>
             <h1 className={styles.name}>{speaker.name}</h1>
             <p className={styles.title}>
-              {`${speaker.title} @ `}
-              <span className={styles.company}>{speaker.company}</span>
+              {speaker.title}
             </p>
             <h2 className={styles['bio-header']}>Bio</h2>
-            <p className={styles.bio}>{speaker.bio}</p>
+            <div className={styles.bio}>
+              <PortableText blocks={speaker.bio} />
+            </div>
             <h3 className={styles['socials-header']}>Social Media</h3>
             {speaker.twitter ? (
               <a
@@ -111,7 +112,7 @@ export default function SpeakerSection({ speaker }: Props) {
       {speaker.talk && (
         <div className={styles['talk-details']}>
           <h3 className={styles['socials-header']}>{speaker.talk.title}</h3>
-          <p>{speaker.talk.description}</p>
+          <PortableText blocks={speaker.talk.description} />
         </div>
       )}
     </>

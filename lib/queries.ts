@@ -1,61 +1,112 @@
 import { groq } from 'next-sanity'
 
-export const getAllSpeakersQuery = groq`*[_type == "speaker"]{
-        name,
-        bio,
-        title,
-        "slug": slug.current,
-        twitter,
-        github,
-        "company": company->name,
-        "talk": *[_type == "talk" && ^._id in speakers[]._ref][0]{
-          title,
-          description
-        },
-        image
-      }`
+export const getAllSpeakersQuery = groq`*[_type=="conference" && slug == "jsworld-conference-africa-2021"][0]{
+  ...{
+    'slots': coalesce(coalesce(schedule, [])[0],{}).slots + coalesce(coalesce(schedule, [])[1].slots, []) + coalesce(coalesce(schedule, [])[2].slots, []) + coalesce(coalesce(schedule, [])[3].slots, []) + coalesce(coalesce(schedule, [])[4].slots, [])
+  }
+}{
+  slots[] {
+    _id,
+    ...coalesce(talk->, freestyleitem){
+      ...,
+      'speakers': select(
+        defined(speakers) && (count(speakers) > 0) && defined(speaker) && speaker._ref => (speakers + [speaker]),
+        defined(speakers) && (count(speakers) > 0) && (!defined(speaker) || !defined(speaker._ref)) => speakers,
+        (!defined(speakers) || count(speakers) == 0) && (defined(speaker) || defined(speaker._ref)) => [speaker],
+        []
+      )
+    }
+  }
+}{
+  slots[] {
+    'talk': {
+      description,
+      'title': coalesce(shortTitle, title)
+    },
+    '_id': coalesce(_id, 'free-form-item-id'),
+    (speakers)[]->{
+      'company': company->.name,
+      bio,
+      'slug': slug.current,
+      image,
+      name,
+      description,
+      twitter,
+      github,
+      'title': title  + select(
+        _type == 'colleague' => ' at Passionate People',
+        defined(client) => select(isFounderOrCreator => " of ", " at ") + client->name,
+        defined(company) => select(isFounderOrCreator => " of ", " at ") + company->name,
+        ''
+      )
+    }
+  }
+}{
+  slots[count(speakers) > 0]{
+    ...{
+      talk,
+     ...speakers[0]
+    }
+  }
+}.slots | order(slots)`
 
-export const getAllStagesQuery = groq`*[_type == "stage"]{
-        name,
-        "slug": slug.current,
-        stream,
-        discord,
-        schedule[]->{
-          title,
-          start,
-          end,
-          speakers[]->{
-            name,
-            "slug": slug.current,
-            image
-          }
-        }
-      }`
+export const getAllJobsQuery = groq`*[_type=="job" &&
+  ('jsworld' match tags || 'jsworld' in tags) &&
+  ('africa' match tags || 'africa' in tags) &&
+  ('job-board' match tags || 'job-board' in tags)
+] {
+  'id': _id,
+  title,
+  description,
+  'link': url,
+  'companyName': client->.name,
+  discord,
+  rank,
+  'image': image.asset->,
+} | order (date desc)|[0...100]`
 
-export const getAllSponsorsQuery = groq`*[_type == "company"]{
-        name,
+export const getAllSponsorsQuery = groq`*[_type=="conference" && slug == "jsworld-conference-africa-2021"][0]{
+  sponsors[]{
+    'tier': title,
+    items[]{
+      ...company->{
+      	name,
         description,
-        "slug": slug.current,
+        'slug': slug.current,
         website,
         callToAction,
-        callToActionLink,
+     		callToActionLink,
         discord,
         youtubeSlug,
-        tier,
+      	'cardImage': logo,
+        logo,
         links[]{
-          url,
-          text
-        },
-        cardImage ,
-        logo
-      }|order(rank desc)`
+      	'text': label,
+      	'url': destination
+    }
+    	}
+    }
+  }
+}.sponsors
+`;
 
-export const getAllJobsQuery = groq`*[_type == "job"]{
-      _id,
-      "companyName": company->name,
+export const getAllStagesQuery = groq`*[_type=="conference" && slug == "jsworld-conference-africa-2021"][0]{
+  stage[] {
+  	name,
+    'slug': slug.current,
+    stream,
+    discord,
+    date,
+    schedule[] {
+      duration, 
+      ...coalesce(talk->){
       title,
-      description,
-      discord,
-      link,
-      rank
-    }|order(rank desc)|[0...100]`
+      speaker-> {
+      name,
+      'slug': slug.current,
+      image
+    }
+   }
+  }
+ }
+}.stage`;

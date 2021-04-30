@@ -26,7 +26,7 @@ import {
   getAllSponsorsQuery,
   getAllStagesQuery,
   getAllSpeakersQuery
-} from './queries'
+} from './queries';
 
 const config = {
   /**
@@ -60,6 +60,10 @@ export const urlFor = (source: String | Object) => createImageUrlBuilder(config)
 
 export const usePreviewSubscription = createPreviewSubscriptionHook(config)
 
+export const PortableText = createPortableTextComponent({
+  ...config,
+  serializers: {},
+})
 
 export async function getAllSpeakers(preview?: Boolean) {
   const data = await getClient(preview).fetch(getAllSpeakersQuery)
@@ -79,7 +83,7 @@ export async function getAllSponsors(preview?: Boolean) {
 }
 
 export async function getAllJobs(preview?: Boolean) {
-  const data = await getClient(preview).fetch(getAllJobsQuery)
+  const data = await getClient(preview).fetch(getAllJobsQuery);
 
   return data
 }

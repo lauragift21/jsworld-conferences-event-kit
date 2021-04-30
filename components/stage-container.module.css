@@ -107,6 +107,10 @@
   margin-right: var(--space-4x);
 }
 
+.discordContainer {
+  height: 100%;
+}
+
 @media screen and (min-width: 600px) {
   .bottom {
     align-items: center;
