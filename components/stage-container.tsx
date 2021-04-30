@@ -16,6 +16,7 @@
 
 import useSWR from 'swr';
 import cn from 'classnames';
+import dynamic from 'next/dynamic'
 import { Stage } from '@lib/types';
 import useLoginStatus from '@lib/hooks/use-login-status';
 import styles from './stage-container.module.css';
@@ -27,6 +28,11 @@ type Props = {
   stage: Stage;
   allStages: Stage[];
 };
+
+const DiscordEmbedNOSSR = dynamic(
+  () => import('./discord-embed'),
+  { ssr: false }
+)
 
 export default function StageContainer({ stage, allStages }: Props) {
   const response = useSWR('/api/stages', {
@@ -83,8 +89,13 @@ export default function StageContainer({ stage, allStages }: Props) {
         ) : loginStatus === 'loading' ? null : (
           <ConfEntry onRegister={() => mutate()} />
         )}
+        <div className={styles.schedule} >
+          <ScheduleSidebar allStages={updatedStages} />
+        </div>  
       </div>
-      <ScheduleSidebar allStages={updatedStages} />
+      <div className={styles.discordContainer}>
+        <DiscordEmbedNOSSR />
+      </div>
     </div>
   );
 }

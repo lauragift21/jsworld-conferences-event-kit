@@ -13,6 +13,8 @@ export const SHORT_DATE = 'June 11 - 1:00pm WAT';
 export const FULL_DATE = 'June 11th 1pm West Africa Time (GMT+1)';
 export const TWEET_TEXT = META_DESCRIPTION;
 export const COOKIE = 'user-id';
+export const DISCORD_SERVER_ID = '644888073741664256';
+export const DISCORD_CHANNEL_ID = '837319697233084458';
 
 // Remove process.env.NEXT_PUBLIC_... below and replace them with
 // strings containing your own privacy policy URL and copyright holder name

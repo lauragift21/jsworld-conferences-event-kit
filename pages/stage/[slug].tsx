@@ -60,7 +60,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const stages = await getAllStages();
-  // console.log(stages)
   const slugs = stages.map((s: Stage) => ({ params: { slug: s.slug } }));
 
   return {

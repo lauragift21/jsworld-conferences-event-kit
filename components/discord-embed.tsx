@@ -15,12 +15,26 @@
  */
 
 
-// import WidgetBot, { API } from '@widgetbot/react-embed';
-// import { DiscordEmbed } from '@lib/types';
-// import styles from './discord.module.css';
+import WidgetBot from '@widgetbot/react-embed';
+import { Client } from '@widgetbot/embed-api'
+import { DISCORD_SERVER_ID, DISCORD_CHANNEL_ID } from '@lib/constants';
+import styles from './discord-embed.module.css';
+
+const onAPI = (api: Client) => {
+  api = api
+  api.on('signIn', user => {
+    console.log(`Signed in as ${user.name}`, user)
+  })
+}
 
 export default function DiscordEmbed() {
   return (
-    <iframe src="https://e.widgetbot.io/channels/644888073741664256/837319697233084458"></iframe>
+      <WidgetBot
+        server={DISCORD_SERVER_ID}
+        channel={DISCORD_CHANNEL_ID}
+        onAPI={onAPI}
+        width={400}
+        className={styles.container}
+      />
   )
 }

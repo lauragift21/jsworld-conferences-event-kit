@@ -49,7 +49,7 @@ export default function ScheduleSidebar({ allStages }: Props) {
   return (
     <div className={styles.schedule}>
       <h3 className={styles.header}>Schedule</h3>
-      <p>{SHORT_DATE}</p>
+      <p className={styles.shortdate}>{SHORT_DATE}</p>
       <Select
         aria-label="Select a stage"
         value={currentStageSlug}

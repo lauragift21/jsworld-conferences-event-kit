@@ -40,8 +40,12 @@
   font-weight: 800;
 }
 
-.talks {
+.shortdate {
   font-size: 24px;
+}
+
+.talks {
+  font-size: 20px;
   margin-top: var(--space-4x);
   display: flex;
   flex-direction: column;
