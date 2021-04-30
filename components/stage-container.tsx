@@ -93,7 +93,7 @@ export default function StageContainer({ stage, allStages }: Props) {
           <ScheduleSidebar allStages={updatedStages} />
         </div>  
       </div>
-      <div className={styles.discordContainer}>
+      <div className={cn(styles.discordContainer, styleUtils['hide-on-mobile'])}>
         <DiscordEmbedNOSSR />
       </div>
     </div>

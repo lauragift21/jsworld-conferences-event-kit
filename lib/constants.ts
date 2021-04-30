@@ -1,4 +1,5 @@
 export const SITE_URL = 'https://africa-jsworld-conference.vercel.app';
+export const CONFERENCE_URL = 'https://africa.jsworldconference.com';
 export const SITE_ORIGIN = process.env.SITE_ORIGIN || new URL(SITE_URL).origin;
 export const TWITTER_USER_NAME = 'frontend_love';
 export const BRAND_NAME = 'JSWorld Conference Africa';

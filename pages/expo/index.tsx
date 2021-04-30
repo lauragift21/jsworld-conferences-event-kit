@@ -22,7 +22,7 @@ import Header from '@components/header';
 import Layout from '@components/layout';
 
 import { getAllSponsors } from '@lib/cms-api';
-import { Sponsor, SponsorArray } from '@lib/types';
+import { SponsorArray } from '@lib/types';
 import { META_DESCRIPTION } from '@lib/constants';
 
 type Props = {
