@@ -16,10 +16,10 @@
 
 import { GetStaticProps } from 'next';
 
-import Page from '@components/page';
-import JobsGrid from '@components/jobs-grid';
-import Layout from '@components/layout';
-import Header from '@components/header';
+import Page from '@components/Page';
+import JobsGrid from '@components/JobsGrid';
+import Layout from '@components/Layout';
+import Header from '@components/Header';
 
 import { getAllJobs } from '@lib/cms-api';
 import { Job } from '@lib/types';

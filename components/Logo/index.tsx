@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-import { SSRProvider, OverlayProvider } from 'react-aria';
-import '@styles/global.css';
-import '@styles/nprogress.css';
-import type { AppProps } from 'next/app';
-import NProgress from '@components/NProgress';
-import ResizeHandler from '@components/ResizeHandler';
+import IconLogo from '../icons/icon-logo';
+import styles from './styles.module.css';
+import { SITE_NAME_MULTILINE } from '@lib/constants';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function Logo({ textSecondaryColor = 'var(--accents-5)' }) {
   return (
-    <SSRProvider>
-      <OverlayProvider>
-        <Component {...pageProps} />
-        <ResizeHandler />
-        <NProgress />
-      </OverlayProvider>
-    </SSRProvider>
+    <div className={styles.logo}>
+      <div className={styles.icon}>
+        <IconLogo />
+      </div>
+      <div className={styles.text}>
+        <div>{SITE_NAME_MULTILINE[0]}</div>
+        <div
+          style={{ ['--color' as string]: textSecondaryColor }}
+          className={styles['text-secondary']}
+        >
+          {SITE_NAME_MULTILINE[1]}
+        </div>
+      </div>
+    </div>
   );
 }

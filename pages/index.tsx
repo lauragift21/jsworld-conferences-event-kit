@@ -17,8 +17,8 @@
 import { useRouter } from 'next/router';
 import { SkipNavContent } from '@reach/skip-nav';
 
-import Page from '@components/page';
-import ConfContent from '@components/index';
+import Page from '@components/Page';
+import ConfContent from '@components/Conf/index';
 import { BRAND_NAME, META_DESCRIPTION } from '@lib/constants';
 
 export default function Conf() {

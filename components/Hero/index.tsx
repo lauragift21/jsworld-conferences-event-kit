@@ -1,0 +1,62 @@
+/**
+ * Copyright 2020 Vercel Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import cn from 'classnames';
+import styleUtils from '@styles/utils.module.css';
+import styles from './styles.module.css';
+import { BRAND_NAME, DATE, SITE_DESCRIPTION } from '@lib/constants';
+
+export default function Hero() {
+  return (
+    <div className={styles.wrapper}>
+      <img
+        className={cn(styleUtils.appear, styleUtils['appear-third'], styleUtils['hide-on-mobile'], styles.logo)}
+        src="https://a.storyblok.com/f/84560/762x231/119fac8f12/tavola-disegno-35.png"
+        alt="Africa"
+      />
+      <h2
+        className={cn(
+          styleUtils.appear,
+          styleUtils['appear-third'],
+          styleUtils['show-on-mobile'],
+          styles.description
+        )}
+      >
+        {SITE_DESCRIPTION}
+      </h2>
+      <h1 className={cn(styleUtils.appear, styleUtils['appear-third'], styles.hero)}>
+        {BRAND_NAME}
+      </h1>
+      <h2
+        className={cn(
+          styleUtils.appear,
+          styleUtils['appear-third'],
+          styleUtils['show-on-tablet'],
+          styles.description
+        )}
+      >
+        {SITE_DESCRIPTION}
+      </h2>
+      <div className={cn(styleUtils.appear, styleUtils['appear-fourth'], styles.info)}>
+        <p>{DATE}</p>
+        <div className={styles['description-separator']} />
+        <p>
+          <strong>Online</strong>
+        </p>
+      </div>
+    </div>
+  );
+}

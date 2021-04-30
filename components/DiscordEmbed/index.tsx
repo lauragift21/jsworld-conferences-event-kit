@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-import { SSRProvider, OverlayProvider } from 'react-aria';
-import '@styles/global.css';
-import '@styles/nprogress.css';
-import type { AppProps } from 'next/app';
-import NProgress from '@components/NProgress';
-import ResizeHandler from '@components/ResizeHandler';
 
-export default function App({ Component, pageProps }: AppProps) {
+import WidgetBot from '@widgetbot/react-embed';
+import { Client } from '@widgetbot/embed-api'
+import { DISCORD_SERVER_ID, DISCORD_CHANNEL_ID } from '@lib/constants';
+import styles from './styles.module.css';
+
+const onAPI = (api: Client) => {
+  api = api
+  api.on('signIn', user => {
+    console.log(`Signed in as ${user.name}`, user)
+  })
+}
+
+export default function DiscordEmbed() {
   return (
-    <SSRProvider>
-      <OverlayProvider>
-        <Component {...pageProps} />
-        <ResizeHandler />
-        <NProgress />
-      </OverlayProvider>
-    </SSRProvider>
-  );
+      <WidgetBot
+        server={DISCORD_SERVER_ID}
+        channel={DISCORD_CHANNEL_ID}
+        onAPI={onAPI}
+        width={400}
+        className={styles.container}
+      />
+  )
 }

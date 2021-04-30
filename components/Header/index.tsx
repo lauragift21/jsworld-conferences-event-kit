@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-import { SSRProvider, OverlayProvider } from 'react-aria';
-import '@styles/global.css';
-import '@styles/nprogress.css';
-import type { AppProps } from 'next/app';
-import NProgress from '@components/NProgress';
-import ResizeHandler from '@components/ResizeHandler';
+import styles from './styles.module.css';
 
-export default function App({ Component, pageProps }: AppProps) {
+type Props = {
+  hero: React.ReactNode;
+  description: React.ReactNode;
+};
+
+export default function Header({ hero, description }: Props) {
   return (
-    <SSRProvider>
-      <OverlayProvider>
-        <Component {...pageProps} />
-        <ResizeHandler />
-        <NProgress />
-      </OverlayProvider>
-    </SSRProvider>
+    <>
+      <h1 className={styles.hero}>{hero}</h1>
+      <p className={styles.description}>{description}</p>
+    </>
   );
 }

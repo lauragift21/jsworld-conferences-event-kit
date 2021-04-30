@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-import { SSRProvider, OverlayProvider } from 'react-aria';
-import '@styles/global.css';
-import '@styles/nprogress.css';
-import type { AppProps } from 'next/app';
-import NProgress from '@components/NProgress';
-import ResizeHandler from '@components/ResizeHandler';
+import styles from './styles.module.css';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <SSRProvider>
-      <OverlayProvider>
-        <Component {...pageProps} />
-        <ResizeHandler />
-        <NProgress />
-      </OverlayProvider>
-    </SSRProvider>
-  );
+export default function ConfContainer({ children }: { children: React.ReactNode }) {
+  return <div className={styles.container}>{children}</div>;
 }

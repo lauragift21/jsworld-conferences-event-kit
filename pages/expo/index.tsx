@@ -16,10 +16,10 @@
 
 import { GetStaticProps } from 'next';
 
-import Page from '@components/page';
-import SponsorsGrid from '@components/sponsors-grid';
-import Header from '@components/header';
-import Layout from '@components/layout';
+import Page from '@components/Page';
+import SponsorsGrid from '@components/SponsorGrid';
+import Header from '@components/Header';
+import Layout from '@components/Layout';
 
 import { getAllSponsors } from '@lib/cms-api';
 import { SponsorArray } from '@lib/types';

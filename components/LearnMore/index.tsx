@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-import { SSRProvider, OverlayProvider } from 'react-aria';
-import '@styles/global.css';
-import '@styles/nprogress.css';
-import type { AppProps } from 'next/app';
-import NProgress from '@components/NProgress';
-import ResizeHandler from '@components/ResizeHandler';
+import cn from 'classnames';
+import styleUtils from '@styles/utils.module.css';
+import styles from './styles.module.css';
+import { CONFERENCE_URL } from '@lib/constants';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function LearnMore() {
   return (
-    <SSRProvider>
-      <OverlayProvider>
-        <Component {...pageProps} />
-        <ResizeHandler />
-        <NProgress />
-      </OverlayProvider>
-    </SSRProvider>
+    <div className={cn(styleUtils.appear, styleUtils['appear-fifth'], styles.contact)}>
+      Learn more on{' '}
+      <a href={CONFERENCE_URL} className={styles['contact-email']} target="_blank" rel="noopener noreferrer">
+        Conference Website
+      </a>
+      .
+    </div>
   );
 }
