@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "next --port $PORT",
     "start": "vercel dev",
-    "build": "echo 'Building Sanity to public/studio…' && cd studio && sanity build ../public/studio -y && cd .. && next build",
+    "build": "next build",
     "license": "addlicense -l apache -c 'Vercel Inc.' components/**/* lib/**/* pages/**/* styles/**/* *.ts *.js",
     "postinstall": "lerna bootstrap",
     "check-template": "sanity-template check"
