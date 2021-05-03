@@ -14,8 +14,8 @@ export const SHORT_DATE = 'June 11 - 1:00pm WAT';
 export const FULL_DATE = 'June 11th 1pm West Africa Time (GMT+1)';
 export const TWEET_TEXT = META_DESCRIPTION;
 export const COOKIE = 'user-id';
-export const DISCORD_SERVER_ID = '644888073741664256';
-export const DISCORD_CHANNEL_ID = '837319697233084458';
+export const NEWSLETTER_ID = 'a0b95d59288c559f9a9089963c8f5543';
+export const CREATESEND_USERNAME = 'ic0pHkOqZZsSOE9CFjYAPMhYo3PH2H7JuiQKkbd1mp3mZLBUnI01jNwRQQ7TIEKTXtdWVntDG0F1P2vp0P2HHpgcRldO9pg7DGiKHh9UozuKP+cKriVvBfIeLbH4H6a4yqGi+sL+4zq/Y49DcRvCFQ==';
 
 // Remove process.env.NEXT_PUBLIC_... below and replace them with
 // strings containing your own privacy policy URL and copyright holder name

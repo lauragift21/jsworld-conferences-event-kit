@@ -18,7 +18,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { nanoid } from 'nanoid';
 import { ConfUser } from '@lib/types';
 import validator from 'validator';
-import { SAMPLE_TICKET_NUMBER, COOKIE } from '@lib/constants';
+import { SAMPLE_TICKET_NUMBER, COOKIE, NEWSLETTER_ID, CREATESEND_USERNAME} from '@lib/constants';
 import cookie from 'cookie';
 import ms from 'ms';
 import redis, { emailToId } from '@lib/redis';
@@ -82,6 +82,29 @@ export default async function register(
         'createdAt',
         createdAt
       );
+      const url = `https://api.createsend.com/api/v3.2/subscribers/${NEWSLETTER_ID}.json`;
+      const reqParams = {
+        EmailAddress: email,
+        ConsentToTrack: 'No'
+      };
+
+      const sendEmail = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Basic ${Buffer.from(`${CREATESEND_USERNAME}`).toString(
+            'base64'
+          )}`
+        },
+        body: JSON.stringify(reqParams)
+      });
+
+      if (!sendEmail.ok) {
+        console.error(`Failed to register user ${email} to newsletter ${NEWSLETTER_ID}`);
+      }
+
+      console.log(sendEmail);
+
       statusCode = 201;
     }
   } else {
