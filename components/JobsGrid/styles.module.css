@@ -152,7 +152,7 @@
 .button {
   border-radius: var(--space-2x);
   border: none;
-  color: #fff;
+  color: #222;
   background: var(--brand);
   cursor: pointer;
   font-family: inherit;
@@ -175,6 +175,10 @@
   background: black;
   color: var(--brand);
   border: 1px solid var(--brand);
+}
+
+.button > svg {
+  fill: #222;
 }
 
 .button:hover > svg,
