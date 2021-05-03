@@ -16,10 +16,10 @@
 
 import { GetStaticProps } from 'next';
 
-import Page from '@components/page';
-import Schedule from '@components/schedule';
-import Layout from '@components/layout';
-import Header from '@components/header';
+import Page from '@components/Page';
+import Schedule from '@components/Schedule';
+import Layout from '@components/Layout';
+import Header from '@components/Header';
 
 import { Stage } from '@lib/types';
 import { META_DESCRIPTION } from '@lib/constants';

@@ -20,8 +20,8 @@ import Head from 'next/head';
 import { SkipNavContent } from '@reach/skip-nav';
 import redis from '@lib/redis';
 
-import Page from '@components/page';
-import ConfContent from '@components/index';
+import Page from '@components/Page';
+import ConfContent from '@components/Conf/index';
 import {
   SITE_URL,
   SITE_NAME,
