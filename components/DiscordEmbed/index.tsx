@@ -17,8 +17,8 @@
 
 import WidgetBot from '@widgetbot/react-embed';
 import { Client } from '@widgetbot/embed-api'
-import { DISCORD_SERVER_ID, DISCORD_CHANNEL_ID } from '@lib/constants';
 import styles from './styles.module.css';
+import  { DiscordEmbedProps } from '@lib/types'
 
 const onAPI = (api: Client) => {
   api = api
@@ -27,11 +27,11 @@ const onAPI = (api: Client) => {
   })
 }
 
-export default function DiscordEmbed() {
+export default function DiscordEmbed({ server, channel }: DiscordEmbedProps) {
   return (
       <WidgetBot
-        server={DISCORD_SERVER_ID}
-        channel={DISCORD_CHANNEL_ID}
+        server={server}
+        channel={channel}
         onAPI={onAPI}
         width={400}
         className={styles.container}

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import useSWR from 'swr';
 import cn from 'classnames';
 import dynamic from 'next/dynamic'
@@ -89,12 +88,10 @@ export default function StageContainer({ stage, allStages }: Props) {
         ) : loginStatus === 'loading' ? null : (
           <ConfEntry onRegister={() => mutate()} />
         )}
-        <div className={styles.schedule} >
-          <ScheduleSidebar allStages={updatedStages} />
-        </div>
       </div>
-      <div className={cn(styles.discordContainer, styleUtils['hide-on-mobile'])}>
-        <DiscordEmbedNOSSR />
+      <div className={styles.chatContainer}>
+        <DiscordEmbedNOSSR server={stage.discordServer} channel={stage.discordChannel} />
+        <ScheduleSidebar allStages={updatedStages} />
       </div>
     </div>
   );

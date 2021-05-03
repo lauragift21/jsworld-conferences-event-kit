@@ -38,6 +38,8 @@ export type Stage = {
   stream: string;
   discord: string;
   schedule: Talk[];
+  discordServer: string;
+  discordChannel: string;
 };
 
 export type Talk = {
@@ -105,4 +107,10 @@ export type GitHubOAuthData =
       type: 'user';
       name: string;
       login: string;
-    };
+  };
+    
+export type DiscordEmbedProps = {
+  server: string;
+  channel: string;
+};
+

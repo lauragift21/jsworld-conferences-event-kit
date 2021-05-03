@@ -44,8 +44,9 @@
     width: calc(100vw - 303px);
   }
 
-  .discordContainer {
-    height: 100%;
+  .chatContainer {
+    display: flex;
+    flex-direction: column;
   }
 }
 

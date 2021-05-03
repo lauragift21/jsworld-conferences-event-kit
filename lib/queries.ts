@@ -97,6 +97,8 @@ export const getAllStagesQuery = groq`*[_type=="conference" && slug == "jsworld-
     stream,
     discord,
     date,
+    discordServer,
+    discordChannel,
     schedule[] {
       duration, 
       ...coalesce(talk->){
